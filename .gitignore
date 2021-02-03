@@ -41,3 +41,4 @@ deploy-u3.sh
 
 ### Properties ###
 /restreamer.properties
+/client.properties
