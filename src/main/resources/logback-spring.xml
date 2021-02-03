@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration scan="true">
+
+
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!--если включишь base.xml то включит логирование в консоль  по-умолчанию - будет дублирование-->
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+    <!--<include resource="org/springframework/boot/logging/logback/file-appender.xml"/>-->
+    <!--<include resource="org/springframework/boot/logging/logback/console-appender.xml"/>-->
+
+    <!-- custom coloring conversion -->
+    <conversionRule conversionWord="highlightex" converterClass="com.acme.logback.HighlightingCompositeConverterEx" />
+
+    <!-- https://logback.qos.ch/manual/configuration.html#shutdownHook and https://jira.qos.ch/browse/LOGBACK-1090 -->
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+
+    <!--http://logback.qos.ch/manual/configuration.html#LevelChangePropagator - хз зачем это, что-то про связку с jul -->
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+
+    <!-- =========================================================================  -->
+
+
+
+   <property name="LOG_FILE_TRACE" value="log/trace.log"/>
+   <property name="LOG_FILE_INFO" value="log/info.log"/>
+   <property name="LOG_FILE_ERROR" value="log/error.log"/>
+
+
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %highlightex(%-5level) [%thread] %cyan(%logger{10}:%L) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="LOG_TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_TRACE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_TRACE}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+        <encoder>
+        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS,UTC} [%thread] %-5level %logger{10}:%L - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+   <appender name="LOG_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+       <file>${LOG_FILE_INFO}</file>
+       <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+           <fileNamePattern>${LOG_FILE_INFO}.%d{yyyy-MM-dd}.log</fileNamePattern>
+           <maxHistory>30</maxHistory>
+       </rollingPolicy>
+       <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+           <level>INFO</level>
+       </filter>
+       <encoder>
+           <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS,UTC} %-5level [%thread] %logger{10}:%L - %msg%n</pattern>
+       </encoder>
+   </appender>
+
+
+    <appender name="LOG_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_ERROR}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_ERROR}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS,UTC} %-5level [%thread] %logger{10}:%L - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- Фильтратор логирования других пакетов -->
+    <logger name="javax.activation" level="WARN"/>
+    <logger name="javax.mail" level="WARN"/>
+    <logger name="javax.management.remote" level="WARN"/>
+    <logger name="javax.xml.bind" level="WARN"/>
+    <logger name="ch.qos.logback" level="WARN"/>
+    <logger name="com.codahale.metrics" level="WARN"/>
+    <logger name="com.ryantenney" level="WARN"/>
+    <logger name="com.sun" level="WARN"/>
+    <logger name="com.zaxxer" level="WARN"/>
+    <logger name="io.undertow" level="WARN"/>
+    <logger name="io.undertow.websockets.jsr" level="ERROR"/>
+    <logger name="org.ehcache" level="WARN"/>
+    <logger name="org.apache" level="WARN"/>
+    <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
+    <logger name="org.bson" level="WARN"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.hibernate.validator" level="WARN"/>
+    <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
+    <logger name="org.hibernate.SQL" level="TRACE"/>                      <!-- SHOW SQL; TRACE to enable -->
+    <logger name="org.hibernate.type.descriptor.sql" level="OFF"/>        <!-- SHOW PARAMS VALUES -->
+    <logger name="org.hibernate.tool.hbm2ddl" level="TRACE"/>             <!-- DDL SQL SCHEMA MIGRATION -->
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework.web" level="WARN"/>
+    <logger name="org.springframework.security" level="WARN"/>
+    <logger name="org.springframework.cache" level="WARN"/>
+    <logger name="org.springframework.transaction" level="OFF"/>          <!-- SHOW TRANSACTIONS -->
+    <logger name="org.thymeleaf" level="WARN"/>
+    <logger name="org.xnio" level="WARN"/>
+    <logger name="springfox" level="WARN"/>
+    <logger name="sun.rmi" level="WARN"/>
+    <logger name="org.flywaydb" level="WARN"/>
+    <logger name="liquibase" level="WARN"/>
+    <logger name="LiquibaseSchemaResolver" level="INFO"/>
+    <logger name="sun.rmi.transport" level="WARN"/>
+    <logger name="okhttp3" level="WARN"/>
+
+    <!--PROJECT LEVEL-->
+    <logger name="ru.kvanttelecom.tv.restreamer" level="INFO"/>
+
+    <!--ROOT LEVEL, default log level to filter packages that not specified above-->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="LOG_TRACE"/>
+        <appender-ref ref="LOG_INFO"/>
+        <appender-ref ref="LOG_ERROR"/>
+    </root>
+
+</configuration>
