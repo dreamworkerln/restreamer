@@ -1,5 +1,6 @@
 package ru.kvanttelecom.tv.restreamer.services;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -22,6 +23,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,14 +67,20 @@ public class PlaylistService {
 
         if (Files.exists(playlistPath) && Files.size(playlistPath) > 0) {
             try {
-                Playlist tmp = objectMapper.readValue(playlistPath.toFile(), Playlist.class);
-                // copy data from tmp object fields to singleton playlist
-                // Если не копировать поля, а заменить ссылку, то
-                // в остальных бинах в системе ссылка останется старая,
-                // это надо бегать по всем бинам, которые используют
-                // бин playlist и заменять его в них,
-                // либо делать ** двойную(вложенную) ссылку в playlist и менять внутреннее поле, нахрен надо оба варианта
-                BeanUtils.copyProperties(tmp, playlist);
+
+                TypeReference<ConcurrentMap<String, Stream>> typeRef = new TypeReference<>() {};
+
+
+//                // copy data from tmp object fields to singleton playlist
+//                // Если не копировать поля, а заменить ссылку, то
+//                // в остальных бинах в системе ссылка останется старая,
+//                // это надо бегать по всем бинам, которые используют
+//                // бин playlist и заменять его в них,
+//                // либо делать ** двойную(вложенную) ссылку в playlist и менять внутреннее поле, нахрен надо оба варианта
+//                BeanUtils.copyProperties(tmp, playlist);
+
+                playlist.map = objectMapper.readValue(playlistPath.toFile(), typeRef);
+
 
                 streamValidator.validatePlaylist(playlist);
                 usedCache = true;
@@ -145,7 +153,7 @@ public class PlaylistService {
             applyRegionChannels(playlist);
 
             // save playlist to file
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(playlistPath.toFile(), playlist);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(playlistPath.toFile(), playlist.map);
         }
     }
 

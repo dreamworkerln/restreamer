@@ -42,3 +42,7 @@ deploy-u3.sh
 ### Properties ###
 /restreamer.properties
 /client.properties
+
+
+### Docker tests ###
+infrastructure/docker-compose-testing/

@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  restreamer:
+    image: "dreamworkerln/restreamer"
+    network_mode: host
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "server.host": "localhost",
+        "server.port": "8080",
+        "client.user.username": "username",
+        "client.user.password": "password",
+        "restreamer.auth.url": "https://auth-server.streamer.ru",
+        "restreamer.playlist.url": "https://playlist.streamer.ru",
+        "restreamer.origin.streamer.address": "origin.streamer.ru:8080",
+        "restreamer.useragent": "MY_USER_AGENT"
+      }'
+    volumes:
+      - type: bind
+        source: /host/some_location/hls_path
+        target: /hls_path
+    restart: always

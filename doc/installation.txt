@@ -1,0 +1,24 @@
+Installation:
+
+1. Configure docker-compose.yml:
+
+    Set in SPRING_APPLICATION_JSON
+
+    server.host - you server hostname
+    server.port - you server port
+    restreamer.playlist.url - playlist url (where to download playlist from)
+    restreamer.origin.streamer.address - origin streamer address (host:port), may include path (host:port/some_path)
+
+        volumes:
+            source: /host/some_location/hls_path - where to store downloaded chunks
+    (mount here tmpfs on host for performance)
+
+    Instead of using restreamer.playlist.url you could place
+    manually modified playlist named playlist.json to directory
+        source: /host/some_location/hls_path
+
+    If restreamer found here file playlist.json it will use this playlist instead trying download new one.
+
+2. Run using start.sh
+
+    

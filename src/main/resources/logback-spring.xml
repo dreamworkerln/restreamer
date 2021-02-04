@@ -32,7 +32,7 @@
    <property name="LOG_FILE_ERROR" value="log/error.log"/>
 
 
-
+    <!--  Время в stdout в локальном часовом поясе -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} %highlightex(%-5level) [%thread] %cyan(%logger{10}:%L) - %msg%n</pattern>
@@ -40,6 +40,7 @@
     </appender>
 
 
+    <!--  Время в файловых логах в UTC -->
     <appender name="LOG_TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_FILE_TRACE}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -103,9 +104,9 @@
     <logger name="org.hibernate" level="WARN"/>
     <logger name="org.hibernate.validator" level="WARN"/>
     <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
-    <logger name="org.hibernate.SQL" level="TRACE"/>                      <!-- SHOW SQL; TRACE to enable -->
-    <logger name="org.hibernate.type.descriptor.sql" level="OFF"/>        <!-- SHOW PARAMS VALUES -->
-    <logger name="org.hibernate.tool.hbm2ddl" level="TRACE"/>             <!-- DDL SQL SCHEMA MIGRATION -->
+    <logger name="org.hibernate.SQL" level="OFF"/>                      <!-- SHOW SQL; TRACE to enable -->
+    <logger name="org.hibernate.type.descriptor.sql" level="OFF"/>      <!-- SHOW PARAMS VALUES -->
+    <logger name="org.hibernate.tool.hbm2ddl" level="OFF"/>             <!-- DDL SQL SCHEMA MIGRATION -->
     <logger name="org.springframework" level="WARN"/>
     <logger name="org.springframework.web" level="WARN"/>
     <logger name="org.springframework.security" level="WARN"/>
@@ -121,10 +122,10 @@
     <logger name="sun.rmi.transport" level="WARN"/>
     <logger name="okhttp3" level="WARN"/>
 
-    <!--PROJECT LEVEL-->
+    <!-- PROJECT LEVEL -->
     <logger name="ru.kvanttelecom.tv.restreamer" level="INFO"/>
 
-    <!--ROOT LEVEL, default log level to filter packages that not specified above-->
+    <!-- ROOT LEVEL, default log level for packages that not specified above -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="LOG_TRACE"/>
