@@ -17,7 +17,7 @@ Installation:
     manually modified playlist.json (json serialized playlist) to directory
         source: /host/some_location/hls_path
 
-    If restreamer found here file playlist.json it will use this playlist instead trying downloading new one.
+    If restreamer found here file playlist.json it will use this playlist instead of trying downloading new one.
 
 2. Run using start.sh
 
