@@ -1,6 +1,6 @@
 Installation:
 
-1. Configure docker-compose.yml:
+1. Configure infrastructure/docker-compose/docker-compose.yml:
 
     Set in SPRING_APPLICATION_JSON
 
