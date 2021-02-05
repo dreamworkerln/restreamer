@@ -11,14 +11,15 @@ Installation:
 
         volumes:
             source: /host/some_location/hls_path - where to store downloaded chunks
-    (mount here tmpfs on host for performance)
+    (on host mount here tmpfs for performance reasons)
 
     Instead of using restreamer.playlist.url you could place
-    manually modified playlist named playlist.json to directory
+    manually modified playlist.json (json serialized playlist) to directory
         source: /host/some_location/hls_path
 
-    If restreamer found here file playlist.json it will use this playlist instead trying download new one.
+    If restreamer found here file playlist.json it will use this playlist instead trying downloading new one.
 
 2. Run using start.sh
 
-    
+3. Stop stop.sh
+

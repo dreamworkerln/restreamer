@@ -10,7 +10,8 @@ import org.springframework.context.annotation.PropertySources;
  * Префиксы параметров внутри .properties для разных модулей делать разными иначе перекроются.
  * RUN Configurations -> VM Params:
  * Выбрать активный профиль: -Dspring.profiles.active=dev
- * Указать значение: -Dzalupa=очко
+ * Указать значение (параметром либо переменной окружения SPRING_APPLICATION_JSON):
+ * -Dzalupa=очко
  * SPRING_APPLICATION_JSON='{"restreamer.somevalue":"something"}' java -jar restreamer.jar
  *
  * Externalising Spring Boot properties when deploying to Docker
