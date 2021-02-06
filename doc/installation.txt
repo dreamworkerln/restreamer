@@ -19,7 +19,3 @@ Installation:
 
     If restreamer found here file playlist.json it will use this playlist instead of trying downloading new one.
 
-2. Run using start.sh
-
-3. Stop stop.sh
-
