@@ -69,7 +69,7 @@ public class StreamerCloner {
         Path playlistPath = Path.of(props.getPlaylistPath());
 
         try {
-            Files.walk(Path.of(props.getStoragePath()))
+            Files.walk(start)
                 .sorted(Comparator.reverseOrder())
                 .map(Path::toFile)
                 .forEach(file -> {

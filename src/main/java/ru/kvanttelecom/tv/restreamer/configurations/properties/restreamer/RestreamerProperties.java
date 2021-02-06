@@ -78,6 +78,10 @@ public class RestreamerProperties {
     private String port;
 
 
+    /**
+     * Get streamer address
+     * @return
+     */
     public String getAddress(){
         return host + ":" + port;
     }
